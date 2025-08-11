@@ -51,9 +51,7 @@ class SummarizeTextUseCase:
             raise ValueError("Invalid summary configuration")
 
         # Perform summarization
-        summary = await self.summary_service.summarize_text(
-            text=request.text, config=config
-        )
+        summary = await self.summary_service.summarize_text(text=request.text, config=config)
 
         # Convert to response DTO
         return SummaryResponse.from_domain_entity(summary)
@@ -85,15 +83,9 @@ class HealthCheckUseCase:
             is_healthy = await self.summary_service.check_service_health()
 
             if is_healthy:
-                return HealthCheckResponse(
-                    status="healthy", details="LMStudio service is responding correctly"
-                )
+                return HealthCheckResponse(status="healthy", details="LMStudio service is responding correctly")
             else:
-                return HealthCheckResponse(
-                    status="unhealthy", details="LMStudio service is not responding"
-                )
+                return HealthCheckResponse(status="unhealthy", details="LMStudio service is not responding")
 
         except Exception as e:
-            return HealthCheckResponse(
-                status="unhealthy", details=f"Health check failed: {str(e)}"
-            )
+            return HealthCheckResponse(status="unhealthy", details=f"Health check failed: {str(e)}")

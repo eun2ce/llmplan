@@ -22,9 +22,7 @@ class SummaryConfig:
             raise ValueError("temperature must be between 0.0 and 2.0")
 
         if self.summary_type not in ["concise", "detailed", "bullet_points"]:
-            raise ValueError(
-                "summary_type must be one of: concise, detailed, bullet_points"
-            )
+            raise ValueError("summary_type must be one of: concise, detailed, bullet_points")
 
 
 @dataclass(frozen=True)

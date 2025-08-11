@@ -20,21 +20,15 @@ class SummaryResponse(BaseModel):
 
     summary_length: int = Field(..., description="Length of the summary in characters")
 
-    original_length: int = Field(
-        ..., description="Length of the original text in characters"
-    )
+    original_length: int = Field(..., description="Length of the original text in characters")
 
-    compression_ratio: float = Field(
-        ..., description="Ratio of summary length to original length"
-    )
+    compression_ratio: float = Field(..., description="Ratio of summary length to original length")
 
     @classmethod
     def from_domain_entity(cls, summary) -> "SummaryResponse":
         """Create response DTO from domain entity"""
         original_length = len(summary.original_text)
-        compression_ratio = (
-            summary.summary_length / original_length if original_length > 0 else 0.0
-        )
+        compression_ratio = summary.summary_length / original_length if original_length > 0 else 0.0
 
         return cls(
             id=summary.id,
@@ -53,17 +47,11 @@ class HealthCheckResponse(BaseModel):
 
     status: str = Field(..., description="Health status: healthy or unhealthy")
 
-    service_name: str = Field(
-        default="Text Summarization Service", description="Name of the service"
-    )
+    service_name: str = Field(default="Text Summarization Service", description="Name of the service")
 
-    timestamp: datetime = Field(
-        default_factory=datetime.now, description="Timestamp of health check"
-    )
+    timestamp: datetime = Field(default_factory=datetime.now, description="Timestamp of health check")
 
-    details: str | None = Field(
-        default=None, description="Additional details about health status"
-    )
+    details: str | None = Field(default=None, description="Additional details about health status")
 
 
 class ErrorResponse(BaseModel):
@@ -73,8 +61,6 @@ class ErrorResponse(BaseModel):
 
     error_code: str = Field(..., description="Error code for client handling")
 
-    timestamp: datetime = Field(
-        default_factory=datetime.now, description="Timestamp when error occurred"
-    )
+    timestamp: datetime = Field(default_factory=datetime.now, description="Timestamp when error occurred")
 
     details: str | None = Field(default=None, description="Additional error details")

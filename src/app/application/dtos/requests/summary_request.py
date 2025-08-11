@@ -1,19 +1,14 @@
 """Summary request DTOs"""
 
-
 from pydantic import BaseModel, Field, validator
 
 
 class SummaryRequest(BaseModel):
     """Request DTO for text summarization"""
 
-    text: str = Field(
-        ..., min_length=10, max_length=50000, description="Text to be summarized"
-    )
+    text: str = Field(..., min_length=10, max_length=50000, description="Text to be summarized")
 
-    max_tokens: int | None = Field(
-        default=1000, ge=50, le=4000, description="Maximum number of tokens for summary"
-    )
+    max_tokens: int | None = Field(default=1000, ge=50, le=4000, description="Maximum number of tokens for summary")
 
     temperature: float | None = Field(
         default=0.3,
@@ -27,9 +22,7 @@ class SummaryRequest(BaseModel):
         description="Type of summary: concise, detailed, bullet_points",
     )
 
-    language: str | None = Field(
-        default="korean", description="Language for summary output"
-    )
+    language: str | None = Field(default="korean", description="Language for summary output")
 
     @validator("summary_type")
     def validate_summary_type(cls, v):

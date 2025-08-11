@@ -1,6 +1,5 @@
 """Summary domain service"""
 
-
 from app.domain.entities.summary import Summary
 from app.domain.repositories.summary_repository import SummaryRepository
 from app.domain.value_objects.summary_config import SummaryConfig
@@ -18,9 +17,7 @@ class SummaryService:
         """
         self.summary_repository = summary_repository
 
-    async def summarize_text(
-        self, text: str, config: SummaryConfig | None = None
-    ) -> Summary:
+    async def summarize_text(self, text: str, config: SummaryConfig | None = None) -> Summary:
         """
         Summarize the given text with business logic validation
 
