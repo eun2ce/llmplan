@@ -14,6 +14,10 @@ This project follows Domain-Driven Design (DDD) principles with a clean architec
 ### 1. Installation
 
 ```bash
+# Install with uv (recommended)
+uv sync
+
+# Or with pip
 pip install -e .
 ```
 
@@ -26,6 +30,10 @@ pip install -e .
 ### 3. Run the Service
 
 ```bash
+# With uv (recommended)
+uv run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+
+# Or directly
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
