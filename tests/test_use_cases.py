@@ -1,11 +1,12 @@
 """Test use cases"""
 
-import pytest
 from unittest.mock import AsyncMock
 
-from app.application.use_cases.summary_use_cases import SummarizeTextUseCase, HealthCheckUseCase
-from app.application.dtos.requests.summary_request import SummaryRequest, HealthCheckRequest
-from app.application.dtos.responses.summary_response import SummaryResponse, HealthCheckResponse
+import pytest
+
+from app.application.dtos.requests.summary_request import HealthCheckRequest, SummaryRequest
+from app.application.dtos.responses.summary_response import HealthCheckResponse, SummaryResponse
+from app.application.use_cases.summary_use_cases import HealthCheckUseCase, SummarizeTextUseCase
 
 
 class TestSummarizeTextUseCase:
@@ -15,6 +16,7 @@ class TestSummarizeTextUseCase:
     def use_case(self, mock_summary_repository):
         """Create use case with mock service"""
         from app.domain.services.summary_service import SummaryService
+
         service = SummaryService(mock_summary_repository)
         return SummarizeTextUseCase(service)
 
@@ -25,14 +27,14 @@ class TestSummarizeTextUseCase:
         request = SummaryRequest(
             text="테스트용 긴 텍스트입니다. 요약 기능을 테스트하기 위한 충분한 길이의 텍스트입니다.",
             summary_type="concise",
-            language="korean"
+            language="korean",
         )
-        
+
         use_case.summary_service.summarize_text = AsyncMock(return_value=sample_summary)
-        
+
         # Act
         result = await use_case.execute(request)
-        
+
         # Assert
         assert isinstance(result, SummaryResponse)
         assert result.summary_text == sample_summary.summary_text
@@ -45,13 +47,11 @@ class TestSummarizeTextUseCase:
         request = SummaryRequest(
             text="테스트용 긴 텍스트입니다. 요약 기능을 테스트하기 위한 충분한 길이의 텍스트입니다.",
             summary_type="concise",
-            language="korean"
+            language="korean",
         )
-        
-        use_case.summary_service.summarize_text = AsyncMock(
-            side_effect=RuntimeError("Summarization failed")
-        )
-        
+
+        use_case.summary_service.summarize_text = AsyncMock(side_effect=RuntimeError("Summarization failed"))
+
         # Act & Assert
         with pytest.raises(RuntimeError, match="Summarization failed"):
             await use_case.execute(request)
@@ -64,6 +64,7 @@ class TestHealthCheckUseCase:
     def use_case(self, mock_summary_repository):
         """Create use case with mock service"""
         from app.domain.services.summary_service import SummaryService
+
         service = SummaryService(mock_summary_repository)
         return HealthCheckUseCase(service)
 
@@ -73,10 +74,10 @@ class TestHealthCheckUseCase:
         # Arrange
         use_case.summary_service.check_service_health = AsyncMock(return_value=True)
         request = HealthCheckRequest()
-        
+
         # Act
         result = await use_case.execute(request)
-        
+
         # Assert
         assert isinstance(result, HealthCheckResponse)
         assert result.status == "healthy"
@@ -88,10 +89,10 @@ class TestHealthCheckUseCase:
         # Arrange
         use_case.summary_service.check_service_health = AsyncMock(return_value=False)
         request = HealthCheckRequest()
-        
+
         # Act
         result = await use_case.execute(request)
-        
+
         # Assert
         assert isinstance(result, HealthCheckResponse)
         assert result.status == "unhealthy"
@@ -101,14 +102,12 @@ class TestHealthCheckUseCase:
     async def test_execute_exception(self, use_case):
         """Test health check when exception occurs"""
         # Arrange
-        use_case.summary_service.check_service_health = AsyncMock(
-            side_effect=Exception("Connection error")
-        )
+        use_case.summary_service.check_service_health = AsyncMock(side_effect=Exception("Connection error"))
         request = HealthCheckRequest()
-        
+
         # Act
         result = await use_case.execute(request)
-        
+
         # Assert
         assert isinstance(result, HealthCheckResponse)
         assert result.status == "unhealthy"
