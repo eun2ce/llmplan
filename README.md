@@ -118,15 +118,13 @@ cd docker/ && docker-compose up -d
 #### Using Helm Chart (Recommended)
 
 ```bash
-# Add Helm repository
-helm repo add llmplan https://eun2ce.github.io/llmplan
-helm repo update
+# Install from OCI registry
+helm install llmplan oci://registry-1.docker.io/eunheejo/llmplan --namespace llmplan --create-namespace
 
-# Install
-helm install llmplan llmplan/llmplan --namespace llmplan --create-namespace
-
-# Or from OCI registry
-helm install llmplan oci://registry-1.docker.io/eunheejo/llmplan
+# Or with custom values
+helm install llmplan oci://registry-1.docker.io/eunheejo/llmplan \
+  --namespace llmplan --create-namespace \
+  --set lmstudio.externalName=my-lmstudio-host.local
 ```
 
 #### Using Kubernetes Manifests

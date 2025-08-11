@@ -2,27 +2,14 @@
 
 ## Quick Start
 
-### Install from OCI Registry (Recommended)
+### Install from OCI Registry
 
 ```bash
-# Add the Helm repository
-helm repo add llmplan oci://registry-1.docker.io/eunheejo/llmplan
+# Install directly from OCI registry
+helm install my-llmplan oci://registry-1.docker.io/eunheejo/llmplan
 
-# Install the chart
-helm install my-llmplan llmplan/llmplan
-```
-
-### Install from GitHub Pages
-
-```bash
-# Add the Helm repository
-helm repo add llmplan https://eun2ce.github.io/llmplan
-
-# Update repository
-helm repo update
-
-# Install the chart
-helm install my-llmplan llmplan/llmplan
+# Or with specific version
+helm install my-llmplan oci://registry-1.docker.io/eunheejo/llmplan --version 0.1.0
 ```
 
 ### Install from Local Chart
@@ -73,11 +60,11 @@ helm install my-llmplan charts/llmplan \
 ## Upgrading
 
 ```bash
-# Update repository
-helm repo update
+# Upgrade to latest version
+helm upgrade my-llmplan oci://registry-1.docker.io/eunheejo/llmplan
 
-# Upgrade release
-helm upgrade my-llmplan llmplan/llmplan
+# Or upgrade to specific version
+helm upgrade my-llmplan oci://registry-1.docker.io/eunheejo/llmplan --version 0.1.1
 ```
 
 ## Uninstalling
