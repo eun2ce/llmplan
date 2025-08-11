@@ -1,0 +1,43 @@
+{{- if and .Values.lmstudio.enabled .Values.lmstudio.externalName }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.lmstudio.service.name }}
+  labels:
+    {{- include "llmplan.labels" . | nindent 4 }}
+    app.kubernetes.io/component: lmstudio
+spec:
+  type: ExternalName
+  externalName: {{ .Values.lmstudio.externalName }}
+  ports:
+    - port: {{ .Values.lmstudio.service.port }}
+      targetPort: {{ .Values.lmstudio.service.port }}
+      protocol: TCP
+      name: http
+{{- else if .Values.lmstudio.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.lmstudio.service.name }}
+  labels:
+    {{- include "llmplan.labels" . | nindent 4 }}
+    app.kubernetes.io/component: lmstudio
+spec:
+  type: ClusterIP
+  clusterIP: None
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: {{ .Values.lmstudio.service.name }}
+  labels:
+    {{- include "llmplan.labels" . | nindent 4 }}
+    app.kubernetes.io/component: lmstudio
+subsets:
+  - addresses:
+      - ip: "host.docker.internal"  # This will be replaced with actual host IP
+    ports:
+      - port: {{ .Values.lmstudio.service.port }}
+        protocol: TCP
+        name: http
+{{- end }}

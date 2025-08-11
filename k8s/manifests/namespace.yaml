@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: llmplan
+  labels:
+    name: llmplan
+    app.kubernetes.io/name: llmplan

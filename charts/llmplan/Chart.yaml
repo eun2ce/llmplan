@@ -1,0 +1,18 @@
+apiVersion: v2
+name: llmplan
+description: A Helm chart for LLMPlan text summarization service
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+home: https://github.com/eun2ce/llmplan
+sources:
+  - https://github.com/eun2ce/llmplan
+maintainers:
+  - name: eun2ce
+    email: joeun2ce@gmail.com
+keywords:
+  - llm
+  - text-summarization
+  - langchain
+  - qwen
+  - lmstudio

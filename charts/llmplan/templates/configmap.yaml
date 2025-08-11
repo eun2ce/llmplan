@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "llmplan.fullname" . }}-config
+  labels:
+    {{- include "llmplan.labels" . | nindent 4 }}
+data:
+  # LMStudio Configuration
+  LMSTUDIO_BASE_URL: {{ .Values.config.lmstudio.baseUrl | quote }}
+  LMSTUDIO_API_KEY: {{ .Values.config.lmstudio.apiKey | quote }}
+  LMSTUDIO_TIMEOUT: {{ .Values.config.lmstudio.timeout | quote }}
+  LMSTUDIO_MAX_RETRIES: {{ .Values.config.lmstudio.maxRetries | quote }}
+  
+  # Summary Configuration
+  DEFAULT_MODEL_NAME: {{ .Values.config.summary.defaultModelName | quote }}
+  DEFAULT_MAX_TOKENS: {{ .Values.config.summary.defaultMaxTokens | quote }}
+  DEFAULT_TEMPERATURE: {{ .Values.config.summary.defaultTemperature | quote }}
+  DEFAULT_SUMMARY_TYPE: {{ .Values.config.summary.defaultSummaryType | quote }}
+  DEFAULT_LANGUAGE: {{ .Values.config.summary.defaultLanguage | quote }}
