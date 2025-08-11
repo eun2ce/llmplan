@@ -1,11 +1,8 @@
-name: Build and Push Docker Image
+name: Build and Push Docker Image (DEPRECATED - Use release.yml)
 
 on:
-  push:
-    branches: [main]
-    tags: ["v*"]
-  pull_request:
-    branches: [main]
+  # Disabled - using unified release.yml workflow
+  workflow_dispatch:
 
 env:
   REGISTRY: docker.io

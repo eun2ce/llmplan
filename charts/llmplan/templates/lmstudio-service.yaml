@@ -26,18 +26,20 @@ spec:
   type: ClusterIP
   clusterIP: None
 ---
-apiVersion: v1
-kind: Endpoints
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
 metadata:
   name: {{ .Values.lmstudio.service.name }}
   labels:
     {{- include "llmplan.labels" . | nindent 4 }}
     app.kubernetes.io/component: lmstudio
-subsets:
+    kubernetes.io/service-name: {{ .Values.lmstudio.service.name }}
+addressType: IPv4
+endpoints:
   - addresses:
-      - ip: "host.docker.internal"  # This will be replaced with actual host IP
-    ports:
-      - port: {{ .Values.lmstudio.service.port }}
-        protocol: TCP
-        name: http
+      - "host.docker.internal"  # This will be replaced with actual host IP
+ports:
+  - port: {{ .Values.lmstudio.service.port }}
+    protocol: TCP
+    name: http
 {{- end }}

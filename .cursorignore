@@ -1,0 +1,7 @@
+# Ignore Helm templates from auto-formatting
+charts/**/*.yaml
+charts/**/*.yml
+*.tpl
+
+# Ignore test files that might have specific formatting
+tests/fixtures/

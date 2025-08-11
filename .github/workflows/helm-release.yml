@@ -1,12 +1,8 @@
-name: Release Helm Chart
+name: Release Helm Chart (DEPRECATED - Use release.yml)
 
 on:
-  push:
-    branches: [main]
-    tags: ["v*"]
-    paths:
-      - "charts/**"
-      - ".github/workflows/helm-release.yml"
+  # Disabled - using unified release.yml workflow  
+  workflow_dispatch:  # Allow manual triggering
 
 env:
   HELM_REPO_NAME: llmplan-charts
@@ -16,7 +12,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       pages: write
       id-token: write
 
@@ -49,6 +45,7 @@ jobs:
         with:
           charts_dir: charts
           config: .github/cr.yaml
+          skip_existing: true
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 

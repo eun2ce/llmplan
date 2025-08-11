@@ -1,132 +1,87 @@
-# Helm Charts
+# LLMPlan Helm Charts
 
-This directory contains Helm charts for deploying llmplan to Kubernetes.
+## Quick Start
 
-## Installation
-
-### Add Helm Repository
+### Install from OCI Registry (Recommended)
 
 ```bash
+# Add the Helm repository
+helm repo add llmplan oci://registry-1.docker.io/eunheejo/llmplan
+
+# Install the chart
+helm install my-llmplan llmplan/llmplan
+```
+
+### Install from GitHub Pages
+
+```bash
+# Add the Helm repository
 helm repo add llmplan https://eun2ce.github.io/llmplan
+
+# Update repository
 helm repo update
-```
 
-### Install from Repository
-
-```bash
-# Install with default values
-helm install llmplan llmplan/llmplan
-
-# Install with custom values
-helm install llmplan llmplan/llmplan -f my-values.yaml
-
-# Install in specific namespace
-helm install llmplan llmplan/llmplan --namespace llmplan --create-namespace
-```
-
-### Install from OCI Registry (Docker Hub)
-
-```bash
-# Install from OCI registry
-helm install llmplan oci://registry-1.docker.io/eunheejo/llmplan
-
-# With specific version
-helm install llmplan oci://registry-1.docker.io/eunheejo/llmplan --version 0.1.0
+# Install the chart
+helm install my-llmplan llmplan/llmplan
 ```
 
 ### Install from Local Chart
 
 ```bash
-# From the project root
-helm install llmplan ./charts/llmplan
+# Clone the repository
+git clone https://github.com/eun2ce/llmplan.git
+cd llmplan
 
-# With custom values
-helm install llmplan ./charts/llmplan -f ./charts/llmplan/my-values.yaml
+# Install the chart
+helm install my-llmplan charts/llmplan
 ```
 
 ## Configuration
 
-### Basic Configuration
+The following table lists the configurable parameters and their default values:
 
-```yaml
-# my-values.yaml
-image:
-  tag: "latest"
+| Parameter               | Description                    | Default            |
+| ----------------------- | ------------------------------ | ------------------ |
+| `image.repository`      | Container image repository     | `eunheejo/llmplan` |
+| `image.tag`             | Container image tag            | `latest`           |
+| `service.type`          | Kubernetes service type        | `ClusterIP`        |
+| `service.port`          | Service port                   | `8000`             |
+| `lmstudio.enabled`      | Enable LMStudio service        | `true`             |
+| `lmstudio.externalName` | External LMStudio service name | `""`               |
 
-replicaCount: 2
+## LMStudio Configuration
 
-resources:
-  limits:
-    cpu: 2000m
-    memory: 2Gi
-  requests:
-    cpu: 1000m
-    memory: 1Gi
+### External LMStudio Service
 
-config:
-  lmstudio:
-    baseUrl: "http://your-lmstudio-host:1234/v1"
-
-lmstudio:
-  externalName: "your-lmstudio-host.example.com"
-```
-
-### Ingress Configuration
-
-```yaml
-# Enable ingress
-ingress:
-  enabled: true
-  className: "nginx"
-  annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
-  hosts:
-    - host: llmplan.example.com
-      paths:
-        - path: /
-          pathType: Prefix
-  tls:
-    - secretName: llmplan-tls
-      hosts:
-        - llmplan.example.com
-```
-
-### Autoscaling
-
-```yaml
-# Enable HPA
-autoscaling:
-  enabled: true
-  minReplicas: 2
-  maxReplicas: 10
-  targetCPUUtilizationPercentage: 70
-```
-
-## Management
+If you have LMStudio running on a specific host:
 
 ```bash
-# Upgrade
-helm upgrade llmplan llmplan/llmplan
-
-# Check status
-helm status llmplan
-
-# Uninstall
-helm uninstall llmplan
-
-# List releases
-helm list
+helm install my-llmplan charts/llmplan \
+  --set lmstudio.enabled=true \
+  --set lmstudio.externalName=my-lmstudio-host.local
 ```
 
-## Development
+### Local LMStudio (Docker Desktop)
+
+For local development with Docker Desktop:
 
 ```bash
-# Lint chart
-helm lint charts/llmplan
+helm install my-llmplan charts/llmplan \
+  --set lmstudio.enabled=true
+```
 
-# Template and check output
-helm template llmplan charts/llmplan
+## Upgrading
 
-# Dry run
-helm install llmplan charts/llmplan --dry-run --debug
+```bash
+# Update repository
+helm repo update
+
+# Upgrade release
+helm upgrade my-llmplan llmplan/llmplan
+```
+
+## Uninstalling
+
+```bash
+helm uninstall my-llmplan
 ```

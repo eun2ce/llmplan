@@ -1,4 +1,21 @@
 {
+  "files.associations": {
+    "*.yaml": "yaml",
+    "*.yml": "yaml"
+  },
+  "yaml.format.enable": false,
+  "[yaml]": {
+    "editor.formatOnSave": false,
+    "editor.defaultFormatter": null
+  },
+  "helm.valuesFilesGlob": "**/values*.{yaml,yml}",
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true,
+    "**/__pycache__": true,
+    "**/.pytest_cache": true
+  },
   "github.copilot.chat.commitMessageGeneration.instructions": [
     {
       "file": ".github/prompts/commit-message-instructions.md"
