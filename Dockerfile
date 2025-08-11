@@ -1,5 +1,5 @@
-# Use Python 3.11 slim image
-FROM python:3.11-slim
+# Use Python 3.12 slim image for better compatibility
+FROM python:3.12-slim
 
 # Set working directory
 WORKDIR /app
@@ -18,7 +18,7 @@ COPY README.md .
 COPY src/ ./src/
 
 # Install Python dependencies with uv
-RUN uv sync --frozen --no-dev
+RUN uv sync --no-dev
 
 # Create non-root user
 RUN useradd --create-home --shell /bin/bash app \
