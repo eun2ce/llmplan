@@ -1,6 +1,6 @@
 """Summary request DTOs"""
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 
 class SummaryRequest(BaseModel):
@@ -24,7 +24,8 @@ class SummaryRequest(BaseModel):
 
     language: str | None = Field(default="korean", description="Language for summary output")
 
-    @validator("summary_type")
+    @field_validator("summary_type")
+    @classmethod
     def validate_summary_type(cls, v):
         """Validate summary type"""
         allowed_types = ["concise", "detailed", "bullet_points"]
@@ -32,7 +33,8 @@ class SummaryRequest(BaseModel):
             raise ValueError(f"summary_type must be one of: {', '.join(allowed_types)}")
         return v
 
-    @validator("language")
+    @field_validator("language")
+    @classmethod
     def validate_language(cls, v):
         """Validate language"""
         allowed_languages = ["korean", "english", "japanese"]
@@ -40,7 +42,8 @@ class SummaryRequest(BaseModel):
             raise ValueError(f"language must be one of: {', '.join(allowed_languages)}")
         return v
 
-    @validator("text")
+    @field_validator("text")
+    @classmethod
     def validate_text(cls, v):
         """Validate text content"""
         if not v.strip():

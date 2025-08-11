@@ -56,7 +56,7 @@ async def summarize_text(
                 error=str(e),
                 error_code="VALIDATION_ERROR",
                 details="Request validation failed",
-            ).dict(),
+            ).model_dump(mode="json"),
         ) from e
 
     except RuntimeError as e:
@@ -66,7 +66,7 @@ async def summarize_text(
                 error=str(e),
                 error_code="SUMMARIZATION_ERROR",
                 details="Failed to generate summary",
-            ).dict(),
+            ).model_dump(mode="json"),
         ) from e
 
     except Exception as e:
@@ -76,7 +76,7 @@ async def summarize_text(
                 error="Internal server error",
                 error_code="INTERNAL_ERROR",
                 details=str(e),
-            ).dict(),
+            ).model_dump(mode="json"),
         ) from e
 
 
@@ -106,7 +106,9 @@ async def health_check(
 
         # Return appropriate HTTP status based on health
         if response.status == "unhealthy":
-            raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail=response.dict())
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail=response.model_dump(mode="json")
+            )
 
         return response
 
@@ -120,5 +122,5 @@ async def health_check(
 
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail=error_response.dict(),
+            detail=error_response.model_dump(mode="json"),
         ) from e

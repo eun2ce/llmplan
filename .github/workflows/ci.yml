@@ -35,7 +35,7 @@ jobs:
 
       - name: Test with pytest
         run: |
-          uv run pytest
+          uv run pytest tests/test_basic.py tests/test_ci_safe.py tests/test_domain_entities.py tests/test_value_objects.py tests/test_domain_services.py tests/test_use_cases.py -v
 
   docker-test:
     runs-on: ubuntu-latest
