@@ -1,7 +1,6 @@
 """Test domain entities"""
 
 from datetime import datetime
-import pytest
 
 from app.domain.entities.summary import Summary
 
@@ -17,7 +16,7 @@ class TestSummary:
             summary_text="요약 텍스트",
             model_name="qwen/qwen3-4b"
         )
-        
+
         assert summary.id == "test-id"
         assert summary.original_text == "원본 텍스트"
         assert summary.summary_text == "요약 텍스트"
@@ -31,11 +30,11 @@ class TestSummary:
             original_text="테스트",
             summary_text="요약"
         )
-        
+
         # created_at should be auto-populated
         assert summary.created_at is not None
         assert isinstance(summary.created_at, datetime)
-        
+
         # summary_length should be auto-calculated
         assert summary.summary_length == len("요약")
 
@@ -45,6 +44,6 @@ class TestSummary:
             original_text="테스트",
             summary_text=""
         )
-        
+
         # summary_length should remain None for empty text
         assert summary.summary_length is None
