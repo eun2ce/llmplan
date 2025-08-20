@@ -1,0 +1,31 @@
+[
+  {
+    "image": "images/1921c65e-38c4-4aec-a298-f7d8a8635197/1921c65e-38c4-4aec-a298-f7d8a8635197_1.jpg",
+    "instruction": "www.xxx.com 에서 test.pdf 파일 업로드해서 ocr돌려줘",
+    "caption": "Page showing the google search bar.",
+    "actions": [
+      {
+        "type": "type",
+        "text": "www.xxx.com",
+        "keys": ["enter"]
+      }
+    ]
+  },
+  {
+    "image": "images/1921c65e-38c4-4aec-a298-f7d8a8635197/1921c65e-38c4-4aec-a298-f7d8a8635197_4.jpg",
+    "instruction": "www.xxx.com 에서 test.pdf 파일 업로드해서 ocr돌려줘",
+    "caption": "Page showing the list of ip addresses.",
+    "actions": []
+  },
+  {
+    "image": "images/1921c65e-38c4-4aec-a298-f7d8a8635197/1921c65e-38c4-4aec-a298-f7d8a8635197_5.jpg",
+    "instruction": "www.xxx.com 에서 test.pdf 파일 업로드해서 ocr돌려줘",
+    "caption": "Pop-up showing the file upload status.",
+    "actions": [
+      {
+        "type": "click",
+        "xy": [0.535, 0.2002]
+      }
+    ]
+  }
+]
