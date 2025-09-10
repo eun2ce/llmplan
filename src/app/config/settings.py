@@ -21,6 +21,10 @@ class Settings(BaseSettings):
     LMSTUDIO_TIMEOUT: int = 30
     LMSTUDIO_MAX_RETRIES: int = 3
 
+    # ga4
+    ANALYTICS_API_KEY: str | None = None
+    ANALYTICS_ENDPOINT: str | None = None
+
     # Summary Configuration
     DEFAULT_MODEL_NAME: str = "qwen/qwen3-4b"
     DEFAULT_MAX_TOKENS: int = 1000

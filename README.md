@@ -15,3 +15,9 @@ helm install llmplan oci://registry-1.docker.io/eunheejo/llmplan --namespace llm
 // test
 uv run pytest
 ```
+
+## contribute
+
+```bash
+$ uv venv & uv sync --group dev $ pre-commit install
+```

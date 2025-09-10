@@ -2,6 +2,7 @@
 FastAPI Application Entry Point
 """
 
+from api_analytics.fastapi import Analytics
 from fastapi import FastAPI
 from fastapi.middleware import Middleware
 from fastapi.middleware.cors import CORSMiddleware
@@ -28,6 +29,7 @@ def create_app() -> FastAPI:
             allow_headers=["*"],
         ),
         Middleware(GZipMiddleware),
+        Middleware(Analytics, api_key=settings.ANALYTICS_API_KEY),
     ]
 
     app = FastAPI(
